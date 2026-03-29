@@ -1,0 +1,51 @@
+---
+title: "Contributing"
+description: "Fork the repo, make your changes, and open a pull request. All contributions welcome."
+---
+
+Contributions are very welcome. Whether you want to add a new animation, a new view, or an entirely new feature, the process is straightforward.
+
+## How to contribute
+
+<Steps>
+  <Step title="Fork the repository">
+    Fork [clawd-mochi on GitHub](https://github.com/yousifamanuel/clawd-mochi) to create your own copy.
+  </Step>
+  <Step title="Make your changes">
+    Edit `clawd_mochi.ino` with your additions or fixes. Keep all code in the single `.ino` file so beginners can open and flash it directly from Arduino IDE without managing multiple files.
+  </Step>
+  <Step title="Test on hardware">
+    Flash your changes to an ESP32-C3 Super Mini with the ST7789 1.54" display connected. Verify the animation, view, or feature behaves correctly on the physical device.
+  </Step>
+  <Step title="Open a pull request">
+    Push your branch and open a pull request against the main repository. Describe what you changed and why.
+  </Step>
+</Steps>
+
+<Note>
+  Please keep the single-file structure (`clawd_mochi.ino`) so it stays easy for beginners to flash.
+</Note>
+
+## Contribution ideas
+
+Looking for something to build? Here are open areas from the project README:
+
+- **New animations** — new expressions, transitions, or idle behaviors
+- **New views** — weather display, clock, notification badges, pixel art scenes
+- **Sound** — add a small buzzer for sound effects
+- **Sensors** — connect a touch sensor or button for physical interaction
+- **OTA updates** — over-the-air firmware updates
+- **MQTT / Home Assistant** — connect to smart home platforms
+
+## License
+
+The project uses two licenses depending on the asset type:
+
+| Asset | License |
+|-------|---------|
+| Code (`clawd_mochi.ino` and all source files) | [MIT License](https://github.com/yousifamanuel/clawd-mochi/blob/main/LICENSE) |
+| 3D models and media assets | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) |
+
+<Note>
+  This is an independent fan project, not affiliated with or endorsed by Anthropic.
+</Note>

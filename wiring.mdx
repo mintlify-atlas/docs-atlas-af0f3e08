@@ -1,0 +1,42 @@
+---
+title: "Wiring"
+description: "Connect the ST7789 TFT display to the ESP32-C3 Super Mini in 8 wires."
+---
+
+The display connects to the ESP32-C3 via SPI using 8 jumper wires. Use hardware SPI pins (GPIO 8 and 10) for best performance.
+
+<Warning>
+  Connect VCC to 3.3V only — never 5V. Do not use GPIO 6 or 7 for SPI — use GPIO 8 (SCK) and GPIO 10 (MOSI) for hardware SPI.
+</Warning>
+
+## Wiring table
+
+| Display pin | ESP32-C3 GPIO  | Wire color (suggested) |
+| ----------- | -------------- | ---------------------- |
+| VCC         | 3V3            | Red                    |
+| GND         | GND            | Black                  |
+| SDA         | GPIO 10 (MOSI) | Orange                 |
+| SCL         | GPIO 8 (SCK)   | Green                  |
+| RES         | GPIO 2         | Purple                 |
+| DC          | GPIO 1         | Blue                   |
+| CS          | GPIO 4         | White                  |
+| BL          | GPIO 3         | Yellow                 |
+
+## Pin definitions
+
+These constants are defined at the top of `clawd_mochi.ino`:
+
+```cpp
+#define TFT_CS  4
+#define TFT_DC  1
+#define TFT_RST 2
+#define TFT_BLK 3
+```
+
+<Tip>
+  Use color-coded jumper wires that match the suggestions in the table above. It makes it much easier to trace connections and spot mistakes during assembly.
+</Tip>
+
+<Note>
+  BL (GPIO 3) controls the backlight. You can toggle it on and off using the "Display on/off" button in the web controller at `http://192.168.4.1`.
+</Note>

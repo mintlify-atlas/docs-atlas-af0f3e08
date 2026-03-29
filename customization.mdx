@@ -1,0 +1,133 @@
+---
+title: "Customization"
+description: "Tweak eye size, animation speed, colors, and more by editing constants in clawd_mochi.ino."
+---
+
+## Eye size and position
+
+These constants near the top of `clawd_mochi.ino` control the eye appearance:
+
+```cpp
+#define EYE_W   30    // eye width in pixels
+#define EYE_H   60    // eye height in pixels
+#define EYE_GAP 120   // gap between eyes
+#define EYE_OX  0     // horizontal offset
+#define EYE_OY  40    // vertical offset upward (subtracted from centre)
+```
+
+| Constant  | Effect |
+|-----------|--------|
+| `EYE_W`   | Width of each eye rectangle in pixels |
+| `EYE_H`   | Height of each eye rectangle in pixels |
+| `EYE_GAP` | Distance between the two eyes in pixels |
+| `EYE_OX`  | Shifts the eye pair horizontally across the display |
+| `EYE_OY`  | Shifts the eye pair vertically upward from center |
+
+The display is 240×240 pixels. By default the eyes are centered horizontally and offset upward by `EYE_OY` pixels from the vertical midpoint.
+
+## Logo animation duration
+
+The boot animation plays once when the device powers on. Two values in `animLogoReveal()` control its timing:
+
+```cpp
+// In animLogoReveal() — how long logo holds after animation
+delay(1500);       // milliseconds — change this number
+
+// Speed of the reveal drawing stroke by stroke
+delay(speedMs(8)); // lower = faster
+```
+
+Reduce `1500` to shorten how long the completed logo is shown. Lower the `speedMs(8)` argument to draw the logo strokes faster.
+
+<Note>
+  The logo animation always plays once at boot and cannot be skipped at runtime.
+</Note>
+
+## Colors
+
+Colors are initialized in `initColours()` using the display library's `tft.color565(r, g, b)` function, which converts 8-bit RGB values to the 16-bit RGB565 format required by the ST7789 display:
+
+```cpp
+C_ORANGE = tft.color565(218, 17, 0);   // eye/accent orange-red
+C_DARKBG = tft.color565(10,  12,  16); // dark background for code view
+C_MUTED  = tft.color565(90,  88,  86); // muted text color
+C_GREEN  = tft.color565(80, 220, 130); // terminal cursor and prompt
+```
+
+| Constant   | Used for |
+|------------|----------|
+| `C_ORANGE` | Eye color, accent lines, header borders |
+| `C_DARKBG` | Background in the Claude Code and terminal views |
+| `C_MUTED`  | Muted text in the WiFi info screen |
+| `C_GREEN`  | Terminal cursor block and `clawd:~$` prompt |
+
+To change a color, replace the `r, g, b` values with your target color in 0–255 range.
+
+The eye animation background (`animBgColor`) defaults to `C_ORANGE` but updates in real time when you use the **Background** color picker in the web controller.
+
+## Animation speed
+
+The `speedMs(ms)` helper scales every animation delay based on the current speed setting:
+
+```cpp
+int speedMs(int ms) {
+  if (animSpeed == 3) return ms / 2;  // fast
+  if (animSpeed == 1) return ms * 2;  // slow
+  return ms;                           // normal
+}
+```
+
+`animSpeed` is set at runtime via the speed slider in the web controller — you do not need to edit any code to change speed while the device is running.
+
+| Slider value | Speed  | Effect on `ms` |
+|-------------|--------|----------------|
+| 1           | Slow   | Doubled (`ms * 2`) |
+| 2           | Normal | Unchanged |
+| 3           | Fast   | Halved (`ms / 2`) |
+
+## Terminal constants
+
+These constants control the layout of the interactive terminal in the Claude Code view:
+
+```cpp
+#define TERM_COLS      15   // max characters per row
+#define TERM_ROWS       8   // number of visible rows
+#define TERM_CHAR_W    12   // character cell width in pixels
+#define TERM_CHAR_H    20   // character cell height in pixels
+#define TERM_PAD_X      8   // left padding
+#define TERM_PAD_Y     18   // top padding (below header)
+```
+
+| Constant      | Effect |
+|---------------|--------|
+| `TERM_COLS`   | Maximum characters before wrapping to the next row |
+| `TERM_ROWS`   | Number of rows visible before the display scrolls |
+| `TERM_CHAR_W` | Width of each character cell in pixels |
+| `TERM_CHAR_H` | Height of each character cell in pixels |
+| `TERM_PAD_X`  | Left margin before text begins |
+| `TERM_PAD_Y`  | Top margin below the `clawd@mochi terminal` header |
+
+If you change `TERM_CHAR_W` or `TERM_CHAR_H`, recalculate `TERM_COLS` and `TERM_ROWS` to fit within the 240×240 display.
+
+## Ideas for extensions
+
+<CardGroup cols={2}>
+  <Card title="New animations" icon="sparkles">
+    Add new expressions, transitions, or idle behaviors to keep the display lively.
+  </Card>
+  <Card title="New views" icon="display">
+    Build a weather display, clock, notification badges, or pixel art scenes as additional view modes.
+  </Card>
+  <Card title="Sound" icon="volume-high">
+    Wire up a small buzzer to an unused GPIO pin and add sound effects to animations.
+  </Card>
+  <Card title="Sensors" icon="hand-pointer">
+    Connect a touch sensor or button for physical interaction without needing the web controller.
+  </Card>
+  <Card title="OTA updates" icon="arrow-up-from-bracket">
+    Add over-the-air firmware updates so you can flash new code without a USB cable.
+  </Card>
+  <Card title="MQTT / Home Assistant" icon="house">
+    Connect Clawd Mochi to smart home platforms via MQTT for automations and remote control.
+  </Card>
+</CardGroup>

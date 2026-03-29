@@ -1,0 +1,41 @@
+---
+title: "Assembly"
+description: "Put together the electronics and 3D printed case in about 30 minutes."
+---
+
+With the case printed and the ESP32 flashed, you can put everything together in around 30 minutes.
+
+## Tools needed
+
+- Soldering iron and solder
+- Double-sided tape
+- 2× M2×6mm screws
+- Screwdriver
+
+<Tip>
+  Do a full dry-run assembly — fit all the parts together without any tape or glue first. This lets you check that everything seats correctly before you commit.
+</Tip>
+
+## Steps
+
+<Steps>
+  <Step title="Print and test-fit the case">
+    Print the case file (body + back) using the settings from the [3D printing guide](/3d-printing). Before gluing anything, test-fit the display in the case to confirm alignment.
+  </Step>
+  <Step title="Thread the wires through the back plate slot">
+    Thread all 8 jumper wires through the back plate slot **before soldering**. You cannot feed them through after the connections are made.
+
+    <Warning>
+      Thread the wires through the back plate slot before soldering — once the wires are soldered to the display and ESP32, they will not fit through the slot.
+    </Warning>
+  </Step>
+  <Step title="Secure the ESP32 inside the back plate">
+    Use double-sided tape to fix the ESP32-C3 Super Mini against the inside face of the back plate. Press firmly and hold for a few seconds to get a good bond.
+  </Step>
+  <Step title="Mount the display with screws">
+    Secure the display in the bezel using 2× M2×6mm screws through the bezel holes. Do not overtighten — the display PCB is thin.
+  </Step>
+  <Step title="Close the case">
+    Route the USB-C cable through the back plate slot, then snap the back plate onto the body. The back should click into place flush with the body.
+  </Step>
+</Steps>

@@ -1,0 +1,47 @@
+---
+title: "Connecting"
+description: "Power up Clawd Mochi and connect to its built-in WiFi hotspot to open the web controller."
+---
+
+Clawd Mochi hosts its own WiFi access point directly from the ESP32. No router, no home network, and no internet connection are needed.
+
+<Note>
+  Clawd Mochi creates its own WiFi access point — you don't need an internet connection or home network.
+</Note>
+
+## Connect to the web controller
+
+<Steps>
+  <Step title="Power via USB-C">
+    Plug a USB-C cable into the ESP32 and connect it to any USB charger or power bank. The display will turn on and show the boot splash.
+  </Step>
+  <Step title="Wait for the boot animation">
+    After the splash screen, a logo reveal animation plays. This takes about 3 seconds. Once it finishes, the display shows the WiFi connection info.
+  </Step>
+  <Step title="Open WiFi settings on your device">
+    On your phone or computer, open the WiFi settings.
+  </Step>
+  <Step title="Join the ClaWD-Mochi network">
+    Connect to the network named **`ClaWD-Mochi`** with the password **`clawd1234`**.
+  </Step>
+  <Step title="Open the web controller">
+    Open a browser and go to **`http://192.168.4.1`**. The web controller loads immediately.
+  </Step>
+</Steps>
+
+<Tip>
+  Any device with a browser works: phone, tablet, laptop. The controller is optimized for mobile screens.
+</Tip>
+
+## WiFi details
+
+| Setting | Value |
+|---------|-------|
+| **SSID** | `ClaWD-Mochi` |
+| **Password** | `clawd1234` |
+| **IP address** | `192.168.4.1` |
+| **Port** | 80 (HTTP) |
+
+<Warning>
+  After connecting to ClaWD-Mochi, your device loses internet access while connected. Disconnect from ClaWD-Mochi to restore internet.
+</Warning>

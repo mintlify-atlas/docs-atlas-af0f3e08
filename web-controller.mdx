@@ -1,0 +1,113 @@
+---
+title: "Web controller"
+description: "Explore all controls in the Clawd Mochi mobile web interface — views, terminal, canvas, and settings."
+---
+
+The web controller is a single-page app served directly from the ESP32 at `http://192.168.4.1`. It runs in any browser and is optimized for mobile screens. Use it to switch views, draw on the display, type into the terminal, and adjust settings.
+
+## Views
+
+Clawd Mochi has four display modes. Tap a view button to activate it.
+
+### Normal eyes
+
+**Command:** `GET /cmd?k=w`
+
+Displays square pixel-art eyes that wiggle left and right, then blink twice. The animation plays 5 wiggle frames, followed by a double blink, then holds the eyes static. Eye dimensions are defined in the firmware:
+
+```cpp
+#define EYE_W   30    // eye width in pixels
+#define EYE_H   60    // eye height in pixels
+#define EYE_GAP 120   // gap between eyes
+```
+
+### Squish eyes
+
+**Command:** `GET /cmd?k=s`
+
+Displays `> <` chevron-style squished eyes. The animation opens and closes the eyes 3 times, then holds them open.
+
+### Claude Code
+
+**Command:** `GET /cmd?k=d`
+
+Displays "Claude Code" text on a dark background with orange accents. Activating this view automatically opens the terminal panel in the web UI so you can start typing immediately. Exit the terminal with the **exit terminal** button (`GET /cmd?k=q`).
+
+### Canvas
+
+**Command:** `GET /canvas?on=1`
+
+Puts the display into drawing mode. The web UI shows a 240×240 canvas that mirrors the display. Draw with your mouse or finger — strokes are sent to the display in real time when you lift your finger or release the mouse button. Tap **✓ done** to exit canvas mode.
+
+## Controls
+
+| Control | What it does |
+|---------|--------------|
+| **Normal eyes** | Plays wiggle + blink animation |
+| **Squish eyes** | Plays open/close animation |
+| **Claude Code** | Shows code display, opens terminal |
+| **Canvas** | Enter drawing mode — draw on display from phone |
+| **Speed slider** | Controls animation speed (slow / normal / fast) |
+| **Background color** | Changes background color of all views |
+| **Pen color** | Sets drawing color for canvas |
+| **Display on/off** | Toggles the backlight |
+| **✓ done** (in canvas) | Exits canvas mode |
+
+## Terminal
+
+The terminal panel appears automatically when you activate the Claude Code view.
+
+- Type in the input box — each character is sent to the display via `GET /char?c=<char>` as you type.
+- Press **Enter** or tap the **↵** button to send a newline.
+- The display shows a `clawd:~$` prompt in green with a cursor block on the active line.
+- The terminal is **8 rows × 15 columns**. When the display fills up, it scrolls automatically.
+- Exit the terminal with the **exit terminal** button, which sends `GET /cmd?k=q`.
+
+## Speed slider
+
+The speed slider controls how fast animations play. There are three settings:
+
+| Value | Label | Effect |
+|-------|-------|--------|
+| `1` | slow | Animation delays are doubled |
+| `2` | normal | Default animation timing |
+| `3` | fast | Animation delays are halved |
+
+## HTTP API
+
+All web controller functions are available as plain HTTP GET requests. This lets you control Clawd Mochi from scripts, shortcuts, or other tools while connected to the `ClaWD-Mochi` network.
+
+| Method | Path | Parameters | Description |
+|--------|------|------------|-------------|
+| GET | `/` | — | Serves the web controller page |
+| GET | `/cmd` | `k=` `w` / `s` / `d` / `a` / `q` | Switch view: `w`=normal eyes, `s`=squish, `d`=code, `a`=logo, `q`=quit terminal |
+| GET | `/char` | `c=<char>` | Send one character to the terminal |
+| GET | `/speed` | `v=` `1` / `2` / `3` | Set animation speed |
+| GET | `/redraw` | `bg=<hex>` | Set background color and redraw current view |
+| GET | `/canvas` | `on=` `0` / `1` | Enable or disable canvas mode |
+| GET | `/draw/clear` | `bg=<hex>` | Clear the canvas with the given color |
+| GET | `/draw/stroke` | `pen=<hex>&pts=<x,y;...>` | Draw a stroke on the canvas |
+| GET | `/backlight` | `on=` `0` / `1` | Toggle the display backlight |
+| GET | `/state` | — | Returns the current device state as JSON |
+
+### State response
+
+`GET /state` returns a JSON object with the current device state:
+
+```json
+{
+  "view": 0,
+  "busy": false,
+  "term": false,
+  "bl": true,
+  "speed": 1
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `view` | integer | Active view: `0`=normal eyes, `1`=squish, `2`=code, `3`=canvas |
+| `busy` | boolean | `true` while an animation is playing |
+| `term` | boolean | `true` when the terminal is active |
+| `bl` | boolean | `true` when the backlight is on |
+| `speed` | integer | Current animation speed: `1`=slow, `2`=normal, `3`=fast |

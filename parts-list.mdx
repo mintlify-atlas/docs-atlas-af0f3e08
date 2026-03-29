@@ -1,0 +1,31 @@
+---
+title: "Parts list"
+description: "Everything you need to build Clawd Mochi — about $7–8 total."
+---
+
+Building Clawd Mochi costs around $7–8 in parts and takes about an hour to assemble. No prior electronics experience is required — if you can follow a wiring diagram and upload a sketch in Arduino IDE, you can build this.
+
+## Parts
+
+| Part | Spec | ~Price |
+| --- | --- | --- |
+| ESP32-C3 Super Mini | Microcontroller with WiFi | ~$2.50 |
+| ST7789 1.54" TFT | 240×240 SPI color display | ~$3.00 |
+| 8 short wires | 8–10 cm Dupont / jumper wires | ~$0.50 |
+| 2× M2×6mm screws | To mount display bezel | ~$0.10 |
+| Double-sided tape | To secure components inside case | ~$0.10 |
+| USB-C cable | For power | — |
+| 3D printed case | PLA or PETG, ~30g | ~$0.50 |
+| **Total** | | **~$7–8** |
+
+<Note>
+  The ESP32-C3 Super Mini and ST7789 display are widely available on AliExpress, Amazon, or local electronics suppliers.
+</Note>
+
+<Tip>
+  Order two or three ESP32-C3 Super Minis while you're at it — they're cheap enough that having a spare on hand is worth it in case one gets damaged during assembly or flashing.
+</Tip>
+
+<Warning>
+  Connect VCC to 3.3V only — never 5V. The ST7789 display is not 5V tolerant.
+</Warning>

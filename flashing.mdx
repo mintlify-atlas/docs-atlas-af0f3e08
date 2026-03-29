@@ -1,0 +1,70 @@
+---
+title: "Flashing the firmware"
+description: "Upload clawd_mochi.ino to your ESP32-C3 Super Mini and watch it come to life."
+---
+
+<Steps>
+  <Step title="Clone or download the repository">
+    ```bash
+    git clone https://github.com/yousifamanuel/clawd-mochi.git
+    ```
+  </Step>
+
+  <Step title="Open the sketch">
+    Open `clawd_mochi.ino` in Arduino IDE. This is the single `.ino` file at the root of the repository.
+  </Step>
+
+  <Step title="Connect the ESP32">
+    Connect your ESP32-C3 Super Mini to your computer via USB-C.
+  </Step>
+
+  <Step title="Select the port">
+    Go to **Tools → Port** and select the port for your device — for example, `/dev/ttyUSB0` on Linux or `COM3` on Windows.
+  </Step>
+
+  <Step title="Upload">
+    Click the **Upload** button (the → arrow) to flash the firmware.
+  </Step>
+
+  <Step title="Confirm success">
+    Wait for `Hard resetting via RTS pin...` to appear in the output. This means the upload succeeded and the board is restarting.
+  </Step>
+</Steps>
+
+<Note>The firmware is a single `.ino` file (`clawd_mochi.ino`) by design — this makes it easy for beginners to read, modify, and flash without navigating multiple files.</Note>
+
+## Boot sequence
+
+When the firmware starts for the first time, it runs through the following sequence:
+
+1. **Boot splash** — displays "Clawd Mochi" text on an orange background for ~1.2 seconds
+2. **Logo reveal** — plays the Clawd crab animation, drawn stroke by stroke
+3. **WiFi info screen** — shows the network credentials and URL to connect:
+   - SSID: `ClaWD-Mochi`
+   - Password: `clawd1234`
+   - URL: `192.168.4.1`
+4. **Waiting** — stays on the WiFi info screen until you make your first web request
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Upload fails: port not found">
+    - Check that your USB cable supports data transfer — some cables are charge-only
+    - Try a different USB port on your computer
+    - Check that the correct port is selected under **Tools → Port**
+  </Accordion>
+
+  <Accordion title="Upload fails: timeout">
+    Ensure **USB CDC On Boot** is set to **Enabled** in your board settings. See [software setup](/software-setup) for instructions.
+  </Accordion>
+
+  <Accordion title="Display shows nothing">
+    - Verify VCC is connected to **3.3V** — never 5V
+    - Check all 8 wires are seated correctly
+    - Double-check that your GPIO assignments match the wiring table
+  </Accordion>
+
+  <Accordion title="Display is upside down or mirrored">
+    The firmware sets `tft.setRotation(1)`, which is correct for the standard mounting orientation. If your display looks wrong, verify you have not modified this line in `clawd_mochi.ino`.
+  </Accordion>
+</AccordionGroup>

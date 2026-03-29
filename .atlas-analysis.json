@@ -1,0 +1,57 @@
+{
+  "projectType": "general",
+  "projectName": "Clawd Mochi",
+  "projectDescription": "A physical ESP32-powered desk companion displaying animated expressions on a 1.54\" TFT display, controlled wirelessly via a built-in WiFi hotspot and mobile web interface.",
+  "theme": "almond",
+  "primaryColor": "#b2b1b0",
+  "lightColor": "#353534",
+  "darkColor": "#040404",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": ["introduction", "parts-list"]
+      },
+      {
+        "group": "Build Guide",
+        "pages": ["wiring", "3d-printing", "assembly"]
+      },
+      {
+        "group": "Firmware Setup",
+        "pages": ["software-setup", "flashing"]
+      },
+      {
+        "group": "Using Clawd Mochi",
+        "pages": ["connecting", "web-controller"]
+      },
+      {
+        "group": "Customization & Contributing",
+        "pages": ["customization", "contributing"]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Animated pixel-art eye expressions (normal wiggle/blink, squish open/close)",
+    "Claude Code display mode with interactive terminal",
+    "Real-time canvas drawing from phone browser",
+    "Built-in WiFi hotspot — no app, no internet required",
+    "Mobile-friendly web controller at 192.168.4.1",
+    "Adjustable animation speed and background color",
+    "Backlight on/off toggle",
+    "Boot logo animation (Clawd crab reveal)",
+    "3D-printable case included (PLA/PETG)",
+    "~$7–8 total build cost, beginner-friendly"
+  ],
+  "publicApiSurface": [
+    "GET / — serves the web controller HTML page",
+    "GET /cmd?k=<w|s|d|a|q> — switch views (normal eyes, squish, code, logo, quit terminal)",
+    "GET /char?c=<char> — send a character to the terminal",
+    "GET /speed?v=<1|2|3> — set animation speed (slow/normal/fast)",
+    "GET /redraw?bg=<hex> — set background color and redraw current view",
+    "GET /canvas?on=<0|1> — enable/disable canvas drawing mode",
+    "GET /draw/clear?bg=<hex> — clear the canvas with a background color",
+    "GET /draw/stroke?pen=<hex>&pts=<x,y;...> — draw a stroke on the display",
+    "GET /backlight?on=<0|1> — toggle the TFT backlight",
+    "GET /state — returns JSON with current view, busy, term, backlight, and speed"
+  ]
+}
